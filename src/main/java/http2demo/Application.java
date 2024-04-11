@@ -27,7 +27,7 @@ public class Application {
     public static class IndexController {
 
         @GetMapping
-        public String post() throws ServletException, IOException {
+        public String get() throws ServletException, IOException {
             return "Ok\n";
         }
 
