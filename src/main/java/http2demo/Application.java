@@ -3,9 +3,14 @@ package http2demo;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.coyote.UpgradeProtocol;
+import org.apache.coyote.http2.Http2Protocol;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,4 +52,19 @@ public class Application {
 
     }
 
+    @Bean
+	WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServletCustomizer() {
+		return tomcat -> {
+			//get the upgrade protocol from connector
+			tomcat.addConnectorCustomizers(connector -> {
+				for(UpgradeProtocol proto : connector.findUpgradeProtocols()) {
+					if (proto instanceof Http2Protocol h2) {
+						h2.setOverheadContinuationThreshold(0);
+						h2.setOverheadDataThreshold(0);
+						h2.setOverheadWindowUpdateThreshold(0);
+					}
+				}
+			});
+		};
+	}
 }
