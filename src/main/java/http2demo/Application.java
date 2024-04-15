@@ -59,9 +59,9 @@ public class Application {
 			tomcat.addConnectorCustomizers(connector -> {
 				for(UpgradeProtocol proto : connector.findUpgradeProtocols()) {
 					if (proto instanceof Http2Protocol h2) {
-						h2.setOverheadContinuationThreshold(0);
-						h2.setOverheadDataThreshold(0);
-						h2.setOverheadWindowUpdateThreshold(0);
+						h2.setOverheadContinuationThreshold(16384);
+						h2.setOverheadDataThreshold(16384);
+						h2.setOverheadWindowUpdateThreshold(16384);
 					}
 				}
 			});
