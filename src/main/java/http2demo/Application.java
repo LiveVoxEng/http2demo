@@ -1,24 +1,13 @@
 package http2demo;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import org.apache.coyote.UpgradeProtocol;
-import org.apache.coyote.http2.Http2Protocol;
+import jakarta.servlet.ServletException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.ServletException;
+import java.io.*;
 
 @SpringBootApplication
 public class Application {
@@ -52,19 +41,19 @@ public class Application {
 
     }
 
-    @Bean
-	WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServletCustomizer() {
-		return tomcat -> {
-			//get the upgrade protocol from connector
-			tomcat.addConnectorCustomizers(connector -> {
-				for(UpgradeProtocol proto : connector.findUpgradeProtocols()) {
-					if (proto instanceof Http2Protocol h2) {
-						h2.setOverheadCountFactor(0);
-						// h2.setOverheadDataThreshold(16384);
-						// h2.setOverheadWindowUpdateThreshold(16384);
-					}
-				}
-			});
-		};
-	}
+//    @Bean
+//	WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServletCustomizer() {
+//		return tomcat -> {
+//			//get the upgrade protocol from connector
+//			tomcat.addConnectorCustomizers(connector -> {
+//				for(UpgradeProtocol proto : connector.findUpgradeProtocols()) {
+//					if (proto instanceof Http2Protocol h2) {
+//						h2.setOverheadCountFactor(0);
+//						// h2.setOverheadDataThreshold(16384);
+//						// h2.setOverheadWindowUpdateThreshold(16384);
+//					}
+//				}
+//			});
+//		};
+//	}
 }
