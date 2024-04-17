@@ -17,6 +17,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.gorylenko.gradle-git-properties' version '2.+'
 }
 
 repositories repo
@@ -25,6 +26,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation('com.livevox:lib-springboot:23.0.0-SNAPSHOT') { changing = true }
+}
+
+springBoot {
+    buildInfo()
 }
 
 tasks.named("bootBuildImage") {
