@@ -25,7 +25,7 @@ repositories repo
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation('com.livevox:lib-springboot:23.0.0-SNAPSHOT') { changing = true }
+    implementation 'com.livevox:lib-springboot:21.0.2-SNAPSHOT'
 }
 
 springBoot {
